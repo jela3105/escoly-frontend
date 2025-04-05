@@ -1,0 +1,20 @@
+<!-- public/admin.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin</title>
+</head>
+<body>
+  <h1>Bienvenido al panel de administrador</h1>
+  <p id="userInfo"></p>
+
+  <script>
+    if (!window.token) {
+      alert('Acceso no autorizado');
+      location.href = '/';
+    }
+
+    document.getElementById('userInfo').textContent = 'Token usado: ' + window.token;
+  </script>
+</body>
+</html>
