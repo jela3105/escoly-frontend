@@ -29,6 +29,11 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+
 // Login
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
