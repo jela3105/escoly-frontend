@@ -7,7 +7,8 @@
     <title>Index Admin</title>
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/administradorResources.css'>
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 
 <body>
@@ -15,7 +16,7 @@
     <div class="barra-lateral">
 
         <div class="lateral-titulo">
-        <h2><span class="lab la-accusoft"></span>Escoly</h2>
+            <h2><span class="lab la-accusoft"></span>Escoly</h2>
         </div>
         <div class="menu-lateral">
             <ul>
@@ -26,7 +27,7 @@
                     <a href="/admin/profesores"><span class="las la-school"></span><span>Profesores</span></a>
                 </li>
                 <li>
-                    <a href="" class="activo"><span class="las la-clone"></span><span>Grupos</span></a>
+                    <a href="/admin/grupos" class="activo"><span class="las la-clone"></span><span>Grupos</span></a>
                 </li>
                 <li>
                     <a href="/admin/alumnos"><span class="las la-user-graduate"></span><span>Alumnos</span></a>
@@ -38,7 +39,7 @@
                     <a href="/admin/soporte"><span class="las la-universal-access"></span><span>Soporte</span></a>
                 </li>
                 <li>
-                    <a href="/logout"><span class="las la-door-closed"></span><span>Cerrar Sesion</span></a>
+                    <a href=""><span class="las la-door-closed"></span><span>Cerrar Sesion</span></a>
                 </li>
             </ul>
         </div>
@@ -63,70 +64,48 @@
         </header>
 
         <main>
-            <div class="tarjetas-grupos">
-                <a href="/admin/asignarAlumnos" class="tarjeta-gral">
-                    <div>
-                        <h1>Asignar alumnos a sus grupos</h1>
-                        <span class="las la-plus-circle"></span><span>Asignar</span>
-                    </div>
-                    <div>
-                        <span class="las la-plus-circle"></span>
-                    </div>
-                </a>
-                <a href="/admin/asignarProfesores" class="tarjeta-gral">
+            <div class="tarjetas-index">
+                <div class="tarjeta-gral-activa">
                     <div>
                         <h1>Asignar profesores a sus grupos</h1>
-                        <span class="las la-plus-circle"></span><span>Asignar</span>
+                        <span class="las la-plus-circle"></span><span>Añadir</span>
                     </div>
                     <div>
                         <span class="las la-plus-circle"></span>
                     </div>
-                </a>
-                <div class="tarjeta-gral">
-                    <div>
-                        <h1>Pasar de ciclo escolar</h1>
-                        <span class="las la-calendar"></span><span>Aqui el ciclo</span>
-                    </div>
-                    <div>
-                        <span class="las la-calendar"></span>
-                    </div>
                 </div>
+
             </div>
             <div class="contenido-gral-grid">
                 <div class="contenido">
                     <div class="tarjeta-contenido">
                         <div class="tarjeta-contenido-header">
-                            <h3>Grupos</h3>
-                            <button>Total grupos: X grupos</button>
+                            <h3>Profesores</h3>
+                            <button>Total: 1 profesores</button>
+                            
                         </div>
-
                         <div class="tarjeta-contenido-body">
                             <div class="table-responsive">
                                 <table width="100%">
                                     <thead>
                                         <tr>
-                                            <td>1ro</td>
-                                            <td>2do</td>
-                                            <td>3ro</td>
-                                            <td>4to</td>
-                                            <td>5to</td>
-                                            <td>6to</td>
+                                            <td>Apellido Paterno</td>
+                                            <td>Apellido Materno</td>
+                                            <td>Nombre</td>
+                                            <td>Grupo</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><a href="/admin/infoGrupos"><button class="consultar">1°A <span
-                                                            class="las la-question-circle"></span></button></a></td>
-                                            <td><a href="/admin/infoGrupos"><button class="consultar">2°A <span
-                                                            class="las la-question-circle"></span></button></a></td>
-                                            <td><a href="/admin/infoGrupos"><button class="consultar">3°A <span
-                                                            class="las la-question-circle"></span></button></a></td>
-                                            <td><a href="/admin/infoGrupos"><button class="consultar">4°A <span
-                                                            class="las la-question-circle"></span></button></a></td>
-                                            <td><a href="/admin/infoGrupos"><button class="consultar">5°A <span
-                                                            class="las la-question-circle"></span></button></a></td>
-                                            <td><a href="/admin/infoGrupos"><button class="consultar">6°A <span
-                                                            class="las la-question-circle"></span></button></a></td>
+                                            <td>Martinez</td>
+                                            <td>Campos</td>
+                                            <td>Oscar</td>
+                                            <td>
+                                                <select name="" id="" class="consultar">
+                                                    <option value="">Seleccionar Grupo</option>
+                                                    <option value="">6A</option>
+                                                </select>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -134,6 +113,27 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="tarjetas-alumnos">
+                <a href="/admin/grupos" class="tarjeta-gral">
+                    <div>
+                        <h1>Regresar</h1>
+                        <span class="las la-undo"></span><span>Regresar</span>
+                    </div>
+                    <div>
+                        <span class="las la-undo"></span>
+                    </div>
+                </a>
+                <button class="tarjeta-gral">
+                    <div>
+                        <h1>Guardar</h1>
+                        <span class="las la-save"></span><span>Guardar</span>
+                    </div>
+                    <div>
+                        <span class="las la-save"></span>
+                    </div>
+                </button>
+
             </div>
         </main>
     </div>

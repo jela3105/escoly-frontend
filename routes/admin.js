@@ -42,4 +42,20 @@ router.get('/editarProfesor', async (req, res) => {
     res.render('admin/editarProfesor', { user: req.session.user });
 });
 
+router.get('/asignarAlumnos', async (req, res) => {
+    res.render('admin/asignarAlumnos', { user: req.session.user });
+});
+
+router.get('/asignarProfesores', async (req, res) => {
+    res.render('admin/asignarProfesores', { user: req.session.user });
+});
+
+router.get('/infoGrupos', async (req, res) => {
+    res.render('admin/infoGrupos', { user: req.session.user });
+});
+
+router.get('/consultarAlumno', async (req, res) => {
+    res.render('admin/consultarAlumno', { user: req.session.user });
+});
+
 module.exports = router;
