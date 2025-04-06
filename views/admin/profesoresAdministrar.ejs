@@ -80,7 +80,7 @@
                     <div class="tarjeta-contenido">
                         <div class="tarjeta-contenido-header">
                             <h3>Profesores</h3>
-                            <button>Total: 1 profesores</button>
+                            <button>Total: <%= teachers.length %> profesores</button>
                         </div>
                         <div class="tarjeta-contenido-body">
                             <div class="tabile-responsive">
@@ -96,15 +96,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <% teachers.forEach(teacher => { %>
                                         <tr>
-                                            <td>Martinez</td>
-                                            <td>Campos</td>
-                                            <td>Oscar</td>
-                                            <td>6A</td>
-                                            <td>Oscar@gmail.com</td>
-                                            <td><a href="/admin/editarProfesor"><button class="consultar">Editar Informacion <span class="las la-question-circle"></span></button></a></td>
+                                            <td><%= teacher.fatherLastName %></td>
+                                            <td><%= teacher.motherLastName %></td>
+                                            <td><%= teacher.names %></td>
+                                            <td><%= teacher.group %></td>
+                                            <td><%= teacher.email %></td>
+                                            <td><a href="/admin/editarProfesor?teacher=<%= teacher.id %>"><button class="consultar">Editar Informacion <span class="las la-question-circle"></span></button></a></td>
                                         </tr>
-                                        
+                                        <% }) %>
                                     </tbody>
                                 </table>
                             </div>

@@ -96,7 +96,7 @@
                                                 Nombre del profesor:
                                                 <br>
                                                 <input type="text" name="" id="" placeholder="Nombre del profesor "
-                                                    class="entradatxt" required value="Oscar">
+                                                    class="entradatxt" required value="<%= teacher.names %>">
                                             </td>
                                         </tr>
                                         <tr>
@@ -104,7 +104,7 @@
                                                 Apellido Paterno:
                                                 <br>
                                                 <input type="text" name="" id="" class="entradatxt"
-                                                    placeholder="Apellido Paterno del profesor" required value="Campos">
+                                                    placeholder="Apellido Paterno del profesor" required value="<%= teacher.fatherLastName %>">
                                             </td>
                                         </tr>
                                         <tr>
@@ -113,7 +113,7 @@
                                                 <br>
                                                 <input type="text" name="" id="" class="entradatxt"
                                                     placeholder="Apellido Materno del profesor" required
-                                                    value="Martinez">
+                                                    value="<%= teacher.motherLastName %>">
                                             </td>
                                         </tr>
                                         <tr>
@@ -121,7 +121,7 @@
                                                 Email:
                                                 <br>
                                                 <input type="text" name="" id="" placeholder="Email del profesor"
-                                                    class="entradatxt" required value="Oscar@gmail.com">
+                                                    class="entradatxt" required value="<%= teacher.email %>">
                                             </td>
                                         </tr>
                                         <tr>
@@ -129,7 +129,7 @@
                                                 Grupo:
                                                 <br>
                                                 <select name="" id="" class="consultar">
-                                                    <option value="">6A</option>
+                                                    <option value="<%= teacher.group %>"><%= teacher.group %></option>
                                                 </select>
 
                                             </td>

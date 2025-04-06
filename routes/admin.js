@@ -14,8 +14,8 @@ router.get('/profesores', async (req, res) => {
         headers: { Authorization: `Bearer ${req.session.token}` }
     });
 
-    const teachers = await teachersRes.json();
-    res.render('admin/profesoresAdministrar', { user: req.session.user, teachers });
+    req.app.locals.teachers = await teachersRes.json();
+    res.render('admin/profesoresAdministrar', { user: req.session.user, teachers: req.app.locals.teachers });
 });
 
 router.get('/grupos', async (req, res) => {
@@ -39,7 +39,23 @@ router.get('/nuevoProfesor', async (req, res) => {
 });
 
 router.get('/editarProfesor', async (req, res) => {
-    res.render('admin/editarProfesor', { user: req.session.user });
+    const teacherId = req.query.teacher;
+
+    if (!req.app.locals.teachers || req.app.locals.teachers.length === 0) {
+        const teachersRes = await fetch('http://localhost:3000/admin/teachers', {
+            headers: { Authorization: `Bearer ${req.session.token}` }
+        });
+        req.app.locals.teachers = await teachersRes.json();
+    }
+
+    let teacher;
+    for (teacher of req.app.locals.teachers) {
+        if (teacher.id == teacherId) {
+            break;
+        }
+    }
+
+    res.render('admin/editarProfesor', { user: req.session.user, teacher });
 });
 
 router.get('/asignarAlumnos', async (req, res) => {
@@ -60,6 +76,25 @@ router.get('/consultarAlumno', async (req, res) => {
 
 router.get('/nuevoAlumno', async (req, res) => {
     res.render('admin/nuevoAlumno', { user: req.session.user });
+});
+
+router.post('/registrarProfesor', async (req, res) => {
+    const { email, names, fathersLastName, mothersLastName } = req.body;
+
+
+    const apiRes = await fetch('http://localhost:3000/admin/teachers/register', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, names, fathersLastName, mothersLastName })
+    });
+
+    const data = await apiRes.json();
+
+    console.log(data.error);
+
+    if (!apiRes.ok) return res.status(401).render('admin/nuevoProfesor', { user: req.session.user, error: data.error });
+
+    res.redirect('/admin/profesores');
 });
 
 module.exports = router;

@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
     <input type="checkbox" name="" id="hamburguesa">
     <div class="barra-lateral">
 
@@ -64,6 +65,7 @@
         </header>
 
         <main>
+
             <div class="tarjetas-index">
                 <div class="tarjeta-gral-activa">
                     <div>
@@ -77,65 +79,74 @@
 
             </div>
             <div class="contenido-gral-grid">
-                <div class="contenido">
-                    <div class="tarjeta-contenido">
-                        <div class="tarjeta-contenido-header">
-                            <h3>Nuevo Profesor</h3>
-                        </div>
-                        <div class="tarjeta-contenido-body">
-                            <div class="table-responsive">
-                                <table width="100%">
-                                    <thead>
-                                        <tr>
-                                            <td>Profesor</td>
+                <% if (typeof error !=='undefined' ) { %>
+                    <p style="color:red">
+                        <%= error %>
+                    </p>
+                    <% } %>
+                        <div class="contenido">
+                            <div class="tarjeta-contenido">
+                                <div class="tarjeta-contenido-header">
+                                    <h3>Nuevo Profesor</h3>
+                                </div>
+                                <div class="tarjeta-contenido-body">
+                                    <div class="table-responsive">
+                                        <table width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <td>Profesor</td>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Nombre del profesor:
-                                                <br>
-                                                <input type="text" name="" id="" placeholder="Nombre del profesor " class="entradatxt"
-                                                    required>
-                                            </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <form action="/admin/registrarProfesor" method="post">
+                                                    <tr>
+                                                        <td>
+                                                            Nombre del profesor:
+                                                            <br>
+                                                            <input type="text" id="names"
+                                                                placeholder="Nombre del profesor " class="entradatxt"
+                                                                required>
+                                                        </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Apellido Paterno:
-                                                <br>
-                                                <input type="text" name="" id="" class="entradatxt"
-                                                    placeholder="Apellido Paterno del profesor" required>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Apellido Materno:
-                                                <br>
-                                                <input type="text" name="" id=""  class="entradatxt"
-                                                    placeholder="Apellido Materno del profesor" required>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Email:
-                                                <br>
-                                                <input type="text" name="" id="" placeholder="Email del profesoror" class="entradatxt" required>
-                                            </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Apellido Paterno:
+                                                            <br>
+                                                            <input type="text" id="fathersLastName" class="entradatxt"
+                                                                placeholder="Apellido Paterno del profesor" required>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Apellido Materno:
+                                                            <br>
+                                                            <input type="text" id="mothersLastName" class="entradatxt"
+                                                                placeholder="Apellido Materno del profesor" required>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Email:
+                                                            <br>
+                                                            <input type="text" id="email"
+                                                                placeholder="Email del profesor" class="entradatxt"
+                                                                required>
+                                                        </td>
 
-                                        </tr>
+                                                    </tr>
+                                                </form>
+                                            </tbody>
 
-                                    </tbody>
-
-                                </table>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
             <div class="tarjetas-alumnos">
-                <a href="/admin/profesores" class="tarjeta-gral" >
+                <a href="/admin/profesores" class="tarjeta-gral">
                     <div>
                         <h1>Regresar</h1>
                         <span class="las la-undo"></span><span>Regresar</span>
@@ -144,7 +155,7 @@
                         <span class="las la-undo"></span>
                     </div>
                 </a>
-                <button class="tarjeta-gral" >
+                <button onclick="createTeacher()" class="tarjeta-gral">
                     <div>
                         <h1>Guardar</h1>
                         <span class="las la-save"></span><span>Guardar</span>
@@ -153,11 +164,11 @@
                         <span class="las la-save"></span>
                     </div>
                 </button>
-                
+
             </div>
         </main>
     </div>
-
+    <script src="js/profesorAdministrar.js"></script>
 </body>
 
 </html>
