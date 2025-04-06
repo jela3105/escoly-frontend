@@ -66,5 +66,5 @@ app.use('/admin', adminRoutes);
 //app.use('/profesor', profesorRoutes);
 
 app.listen(3001, () => {
-    console.log('Servidor frontend en http://localhost:3000');
+    console.log('Servidor frontend en http://localhost:3001');
 });

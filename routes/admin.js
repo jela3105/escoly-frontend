@@ -34,4 +34,12 @@ router.get('/soporte', async (req, res) => {
     res.render('admin/soporteAdmin', { user: req.session.user });
 });
 
+router.get('/nuevoProfesor', async (req, res) => {
+    res.render('admin/nuevoProfesor', { user: req.session.user });
+});
+
+router.get('/editarProfesor', async (req, res) => {
+    res.render('admin/editarProfesor', { user: req.session.user });
+});
+
 module.exports = router;
