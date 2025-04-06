@@ -19,7 +19,15 @@ router.get('/profesores', async (req, res) => {
 });
 
 router.get('/grupos', async (req, res) => {
-    res.render('admin/gruposAdministrar', { user: req.session.user });
+
+    const groupsRes = await fetch('http://localhost:3000/admin/groups', {
+        headers: { Authorization: `Bearer ${req.session.token}` }
+    });
+
+    res.app.locals.groups = await groupsRes.json();
+    console.log(res.app.locals.groups);
+
+    res.render('admin/gruposAdministrar', { user: req.session.user, groups: res.app.locals.groups });
 });
 
 router.get('/alumnos', async (req, res) => {
