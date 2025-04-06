@@ -58,4 +58,8 @@ router.get('/consultarAlumno', async (req, res) => {
     res.render('admin/consultarAlumno', { user: req.session.user });
 });
 
+router.get('/nuevoAlumno', async (req, res) => {
+    res.render('admin/nuevoAlumno', { user: req.session.user });
+});
+
 module.exports = router;
