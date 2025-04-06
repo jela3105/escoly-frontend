@@ -113,7 +113,7 @@
                                                     <% const pila = groupsByYear.get(i) %>
                                                     <td>
                                                         <% if (pila && pila.length > 0) { %>
-                                                            <% const elemento = pila.pop() %>
+                                                            <% const elemento = pila.shift() %>
                                                             <% colocados++ %>
                                                             <a
                                                                 href="/admin/infoGrupos">
