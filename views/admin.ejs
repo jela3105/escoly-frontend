@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin</title></head>
+<body>
+  <h1>Panel de Administrador</h1>
+  <p>Bienvenido, <%= user.name %> (<%= user.role %>)</p>
+
+  <h2>Datos desde la API:</h2>
+  <pre><%= JSON.stringify(teachers, null, 2) %></pre>
+</body>
+</html>
