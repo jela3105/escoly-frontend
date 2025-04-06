@@ -25,7 +25,6 @@ router.get('/grupos', async (req, res) => {
     });
 
     res.app.locals.groups = await groupsRes.json();
-    console.log(res.app.locals.groups);
 
     res.render('admin/gruposAdministrar', { user: req.session.user, groups: res.app.locals.groups });
 });
@@ -104,7 +103,6 @@ router.post('/registrarProfesor', async (req, res) => {
     const data = await apiRes.json();
 
     if (!apiRes.ok) {
-        console.log('Error en la respuesta del API, renderizando vista de error');
         return res.status(401).render('admin/nuevoProfesor', {
             user: req.session.user,
             errorMessage: data.error || 'Error al registrar el profesor. Por favor, intente nuevamente.',
@@ -112,7 +110,6 @@ router.post('/registrarProfesor', async (req, res) => {
         });
     }
 
-    console.log('Registro exitoso, redirigiendo...');
     res.redirect('/admin/profesores');
 });
 
@@ -136,14 +133,12 @@ router.post('/changePassword', async (req, res) => {
     const data = await apiRes.json();
 
     if (!apiRes.ok) {
-        console.log('Error en la respuesta del API, renderizando vista de error');
         return res.status(401).render('admin/passwordAdmin', {
             user: req.session.user,
             errorMessage: data.error || 'Error al cambiar la contraseña. Por favor, intente mas tarde.'
         });
     }
 
-    console.log('Cambio de contraseña exitoso, redirigiendo...');
     res.redirect('/admin');
 });
 

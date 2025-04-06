@@ -5,7 +5,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     try {
 
-        console.log(email, password);
         const res = await fetch('http://localhost:3000/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -14,12 +13,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
 
         const data = await res.json();
-        console.log(data);
 
         if (!res.ok) throw new Error('Login fallido');
 
         const token = data.token;
-        console.log(token);
 
         // Solicita el HTML protegido al servidor Express local
         const htmlRes = await fetch('/admin', {
