@@ -35,7 +35,10 @@ router.get('/soporte', async (req, res) => {
 });
 
 router.get('/nuevoProfesor', async (req, res) => {
-    res.render('admin/nuevoProfesor', { user: req.session.user });
+    res.render('admin/nuevoProfesor', {
+        user: req.session.user,
+        formData: { names: '', fathersLastName: '', mothersLastName: '', email: '' }
+    });
 });
 
 router.get('/editarProfesor', async (req, res) => {
@@ -81,7 +84,6 @@ router.get('/nuevoAlumno', async (req, res) => {
 router.post('/registrarProfesor', async (req, res) => {
     const { email, names, fathersLastName, mothersLastName } = req.body;
 
-
     const apiRes = await fetch('http://localhost:3000/admin/teachers/register', {
         method: 'POST',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
@@ -90,10 +92,16 @@ router.post('/registrarProfesor', async (req, res) => {
 
     const data = await apiRes.json();
 
-    console.log(data.error);
+    if (!apiRes.ok) {
+        console.log('Error en la respuesta del API, renderizando vista de error');
+        return res.status(401).render('admin/nuevoProfesor', {
+            user: req.session.user,
+            errorMessage: data.error || 'Error al registrar el profesor. Por favor, intente nuevamente.',
+            formData: req.body
+        });
+    }
 
-    if (!apiRes.ok) return res.status(401).render('admin/nuevoProfesor', { user: req.session.user, error: data.error });
-
+    console.log('Registro exitoso, redirigiendo...');
     res.redirect('/admin/profesores');
 });
 
