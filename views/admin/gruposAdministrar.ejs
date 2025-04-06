@@ -81,8 +81,9 @@
                 <div class="contenido">
                     <div class="tarjeta-contenido">
                         <div class="tarjeta-contenido-header">
-                            <h3>Grupos</h3> <button>Total grupos: X
-                                grupos</button>
+                            <h3>Grupos</h3> <button>Total grupos:
+                                <%= groups.length %>
+                            </button>
                         </div>
                         <div class="tarjeta-contenido-body">
                             <div class="table-responsive">
@@ -114,7 +115,14 @@
                                                         <% if (pila && pila.length > 0) { %>
                                                             <% const elemento = pila.pop() %>
                                                             <% colocados++ %>
-                                                            <%= elemento.year + elemento.name %>
+                                                            <a
+                                                                href="/admin/infoGrupos">
+                                                                <button
+                                                                    class="consultar">
+                                                                    <%= elemento.year + elemento.name %>
+                                                                    <span
+                                                                        class="las la-question-circle"></span>
+                                                                </button> </a>
                                                         <% } %>
                                                     </td>
                                                 <% } %>
