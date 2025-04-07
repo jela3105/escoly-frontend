@@ -67,7 +67,6 @@ router.get('/editarProfesor', async (req, res) => {
             break;
         }
     }
-
     res.render('admin/editarProfesor', { user: req.session.user, teacher });
 });
 
