@@ -85,6 +85,7 @@
                         </div>
                         <div class="tarjeta-contenido-body">
                             <div class="table-responsive">
+                                <form action="">
                                 <table width="100%">
                                     <thead>
                                         <tr>
@@ -97,13 +98,13 @@
                                             <td>
                                                 Nombre del alumno:
                                                 <br>
-                                                <input type="text" name="" id="" placeholder="Nombre del alumno " class="entradatxt"
+                                                <input type="text" name="names" id="names" placeholder="Nombre del alumno " class="entradatxt"
                                                     required>
                                             </td>
                                             <td>
                                                 Nombre del tutor:
                                                 <br>
-                                                <input type="text" name="" id="" placeholder="Nombre del tutor" class="entradatxt"
+                                                <input type="text" name="tutorName" id="tutorName" placeholder="Nombre del tutor" class="entradatxt"
                                                     required>
                                             </td>
 
@@ -112,13 +113,13 @@
                                             <td>
                                                 Apellido Paterno:
                                                 <br>
-                                                <input type="text" name="" id="" class="entradatxt"
+                                                <input type="text" name="fathersLastName" id="fathersLastName" class="entradatxt"
                                                     placeholder="Apellido Paterno del alumno" required>
                                             </td>
                                             <td>
                                                 Apellido Paterno:
                                                 <br>
-                                                <input type="text" name="" id="" class="entradatxt"
+                                                <input type="text" name="tutorLastName" id="tutorLastName" class="entradatxt"
                                                     placeholder="Apellido Paterno del tutor" required>
                                             </td>
                                         </tr>
@@ -126,13 +127,13 @@
                                             <td>
                                                 Apellido Materno:
                                                 <br>
-                                                <input type="text" name="" id=""  class="entradatxt"
+                                                <input type="text" name="mothersLastName" id="mothersLastName"  class="entradatxt"
                                                     placeholder="Apellido Materno del alumno" required>
                                             </td>
                                             <td>
                                                 Apellido Materno:
                                                 <br>
-                                                <input type="text" name="" id="" placeholder="Apellido Paterno de tutor" class="entradatxt"
+                                                <input type="text" name="tutorSecondLastName" id="tutorSecondLastName" placeholder="Apellido Materno del tutor" class="entradatxt"
                                                     required>
                                             </td>
 
@@ -144,20 +145,23 @@
                                             <td>
                                                 Email:
                                                 <br>
-                                                <input type="email" name="tutorEmail" id="tutorEmail" placeholder="Email del tutor" class="entradatxt">
+                                                <input type="email" name="tutorEmail" id="tutorEmail" placeholder="Email del tutor" class="entradatxt" required>
                                             </td>
 
                                         </tr>
                                     </tbody>
                                 </table>
+                                </form>
                                 <div class="btn-container">
-                                    <button type="button" onclick="addTutor()" class="btn-add-tutor">
+                                    <button type="button" onclick="addTutor()" class="btn-add-tutor"><span class="las la-plus-circle" ></span>
                                         Agregar tutor
                                     </button>
                                 </div>
                                 <div id="tutorsList">
                                     <h4>Tutores agregados:</h4>
-                                    <ul id="tutorsContainer"></ul>
+                                    <ul id="tutorsContainer">
+                                        <!-- Tutors will be dynamically added here -->
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +178,7 @@
                         <span class="las la-undo"></span>
                     </div>
                 </a>
-                <button class="tarjeta-gral" >
+                <button onclick="saveStudent()" class="tarjeta-gral" >
                     <div>
                         <h1>Guardar</h1>
                         <span class="las la-save"></span><span>Guardar</span>

@@ -120,6 +120,8 @@ router.post('/registrarProfesor', async (req, res) => {
     res.redirect('/admin/profesores');
 });
 
+
+
 router.post('/registrarGrupo', async (req, res) => {
     const { year, name } = req.body;
 
@@ -171,6 +173,37 @@ router.post('/registrarAlumno', async (req, res) => {
     res.redirect('/admin/alumnos');
 });
 
+router.post('/students/preregister', async (req, res) => {
+    const { studentName, studentLastName, studentSecondLastName, tutors } = req.body;
+    await Promise.all(tutors.map(async element => {
+        const apiRes = await fetch('http://localhost:3000/admin/guardian/register', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ names: element.name, fathersLastName: element.lastName, mothersLastName: element.secondLastName, email: element.email })
+        });
+        const data = await apiRes.json();
+        console.log(data);
+    }));
+    let emails = [];
+    tutors.forEach(async element => { 
+        emails.push(element.email);
+    });
+    console.log(emails);
+    const apiRes = await fetch('http://localhost:3000/admin/students/register', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names:studentName , mothersLastName:studentLastName, fathersLastName:studentSecondLastName, guardians: emails })
+    });
+    const data = await apiRes.json();
+    console.log(data);
+
+    if (req.query.redirect === 'true') {
+        return res.json({ redirectUrl: '/admin/alumnos' });
+    }
+
+    res.status(200).json({ message: 'Student preregistered successfully' });
+});
+
 router.post('/changePassword', async (req, res) => {
     const { currentPassword, newPassword, confirmNewPassword } = req.body;
 
@@ -198,6 +231,8 @@ router.post('/changePassword', async (req, res) => {
     }
 
     res.redirect('/admin');
+
+
 });
 
 module.exports = router;
