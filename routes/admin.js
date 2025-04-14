@@ -90,6 +90,14 @@ router.get('/nuevoAlumno', async (req, res) => {
     res.render('admin/nuevoAlumno', { user: req.session.user });
 });
 
+router.get('/nuevoGrupo', async (req, res) => {
+    res.render('admin/nuevoGrupo', {
+        user: req.session.user,
+        formData: { year: '', groupp: '' },
+        errorMessage: undefined
+    });
+});
+
 router.post('/registrarProfesor', async (req, res) => {
     const { email, names, fathersLastName, mothersLastName } = req.body;
 
@@ -110,6 +118,57 @@ router.post('/registrarProfesor', async (req, res) => {
     }
 
     res.redirect('/admin/profesores');
+});
+
+router.post('/registrarGrupo', async (req, res) => {
+    const { year, name } = req.body;
+
+    const apiRes = await fetch('http://localhost:3000/admin/groups/register', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ year, name })
+    });
+
+    let data;
+    try {
+        // Intentar parsear la respuesta como JSON
+        data = await apiRes.json();
+    } catch (err) {
+        // Si no es JSON, asignar un valor por defecto
+        data = { error: 'Respuesta inesperada del servidor.' };
+    }
+
+    if (!apiRes.ok) {
+        return res.status(401).render('admin/nuevoGrupo', {
+            user: req.session.user,
+            errorMessage: data.error || 'Error al registrar el grupo. Por favor, intente nuevamente.',
+            formData: req.body
+        });
+    }
+
+    res.redirect('/admin/grupos');
+});
+
+router.post('/registrarAlumno', async (req, res) => {
+    const { studentName, studentLastName, studentSecondLastName, tutors } = req.body;
+
+    const apiRes = await fetch('http://localhost:3000/admin/students/register', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentName, studentLastName, studentSecondLastName, tutors })
+    });
+
+    const data = await apiRes.json();
+
+    if (!apiRes.ok) {
+        return res.status(401).render('admin/nuevoAlumno', {
+            user: req.session.user,
+            errorMessage: data.error || 'Error al registrar el alumno. Por favor, intente nuevamente.',
+            formData: req.body
+        });
+    }
+
+    res.redirect('/admin/alumnos');
 });
 
 router.post('/changePassword', async (req, res) => {
