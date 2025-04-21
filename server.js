@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
+require('dotenv').config()
 
 const adminRoutes = require('./routes/admin');
 const tutorRoutes = require('./routes/tutor');
@@ -38,7 +39,8 @@ app.get('/logout', (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    const apiRes = await fetch('http://localhost:3000/auth/login', {
+
+    const apiRes = await fetch(`${process.env.API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
