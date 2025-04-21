@@ -49,6 +49,7 @@ app.post('/login', async (req, res) => {
     if (!apiRes.ok) return res.status(401).render('login', { error: data.error });
 
     req.session.token = data.token;
+    req.session.horaLogin = Date.now();
     req.session.user = data.user; // Supone que el backend regresa info del usuario con rol
 
     // Redirige según rol

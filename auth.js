@@ -4,6 +4,13 @@ module.exports = {
         if (!req.session.token || !req.session.user) {
             return res.redirect('/');
         }
+
+        const tiempoTranscurrido = Date.now() - req.session.horaLogin;
+        if (tiempoTranscurrido > 29 * 60 * 1000) { // El token expira en 30 minutos, asi que se debe validar
+            req.session.destroy();
+            return res.redirect('/');
+        }
+
         next();
     },
     soloRol: (rol) => {
