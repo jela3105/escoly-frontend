@@ -30,7 +30,7 @@ router.post('/changePassword', async (req, res) => {
         });
     }
 
-    const apiRes = await fetch('http://localhost:3000/auth/change-password', {
+    const apiRes = await fetch(`${process.env.API_URL}/auth/change-password`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ currentPassword, newPassword })

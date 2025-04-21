@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     try {
 
-        const res = await fetch('http://localhost:3000/auth/login', {
+        const res = await fetch(`${process.env.API_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -29,7 +29,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
         // Carga el HTML manualmente y guarda el token en memoria
         document.open();
-        document.write(`<script>window.token = '${token}'<\/script>` + html);
+        document.write(`< script > window.token = '${token}' <\/script>` + html);
         document.close();
     } catch (err) {
         alert(err.message);

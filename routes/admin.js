@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/profesores', async (req, res) => {
-    const teachersRes = await fetch('http://localhost:3000/admin/teachers', {
+    const teachersRes = await fetch(`${process.env.API_URL}/admin/teachers`, {
         headers: { Authorization: `Bearer ${req.session.token}` }
     });
 
@@ -20,7 +20,7 @@ router.get('/profesores', async (req, res) => {
 
 router.get('/grupos', async (req, res) => {
 
-    const groupsRes = await fetch('http://localhost:3000/admin/groups', {
+    const groupsRes = await fetch(`${process.env.API_URL}/admin/groups`, {
         headers: { Authorization: `Bearer ${req.session.token}` }
     });
 
@@ -55,7 +55,7 @@ router.get('/editarProfesor', async (req, res) => {
     const teacherId = req.query.teacher;
 
     if (!req.app.locals.teachers || req.app.locals.teachers.length === 0) {
-        const teachersRes = await fetch('http://localhost:3000/admin/teachers', {
+        const teachersRes = await fetch(`${process.env.API_URL}/admin/teachers`, {
             headers: { Authorization: `Bearer ${req.session.token}` }
         });
         req.app.locals.teachers = await teachersRes.json();
@@ -101,7 +101,7 @@ router.get('/nuevoGrupo', async (req, res) => {
 router.post('/registrarProfesor', async (req, res) => {
     const { email, names, fathersLastName, mothersLastName } = req.body;
 
-    const apiRes = await fetch('http://localhost:3000/admin/teachers/register', {
+    const apiRes = await fetch(`${process.env.API_URL}/admin/teachers/register`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, names, fathersLastName, mothersLastName })
@@ -125,7 +125,7 @@ router.post('/registrarProfesor', async (req, res) => {
 router.post('/registrarGrupo', async (req, res) => {
     const { year, name } = req.body;
 
-    const apiRes = await fetch('http://localhost:3000/admin/groups/register', {
+    const apiRes = await fetch(`${process.env.API_URL}/admin/groups/register`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ year, name })
@@ -154,7 +154,7 @@ router.post('/registrarGrupo', async (req, res) => {
 router.post('/registrarAlumno', async (req, res) => {
     const { studentName, studentLastName, studentSecondLastName, tutors } = req.body;
 
-    const apiRes = await fetch('http://localhost:3000/admin/students/register', {
+    const apiRes = await fetch(`${process.env.API_URL}/admin/students/register`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentName, studentLastName, studentSecondLastName, tutors })
@@ -176,7 +176,7 @@ router.post('/registrarAlumno', async (req, res) => {
 router.post('/students/preregister', async (req, res) => {
     const { studentName, studentLastName, studentSecondLastName, tutors } = req.body;
     await Promise.all(tutors.map(async element => {
-        const apiRes = await fetch('http://localhost:3000/admin/guardian/register', {
+        const apiRes = await fetch(`${process.env.API_URL}/admin/guardian/register`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({ names: element.name, fathersLastName: element.lastName, mothersLastName: element.secondLastName, email: element.email })
@@ -185,14 +185,14 @@ router.post('/students/preregister', async (req, res) => {
         console.log(data);
     }));
     let emails = [];
-    tutors.forEach(async element => { 
+    tutors.forEach(async element => {
         emails.push(element.email);
     });
     console.log(emails);
-    const apiRes = await fetch('http://localhost:3000/admin/students/register', {
+    const apiRes = await fetch(`${process.env.API_URL}/admin/students/register`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ names:studentName , mothersLastName:studentLastName, fathersLastName:studentSecondLastName, guardians: emails })
+        body: JSON.stringify({ names: studentName, mothersLastName: studentLastName, fathersLastName: studentSecondLastName, guardians: emails })
     });
     const data = await apiRes.json();
     console.log(data);
@@ -215,7 +215,7 @@ router.post('/changePassword', async (req, res) => {
         });
     }
 
-    const apiRes = await fetch('http://localhost:3000/auth/change-password', {
+    const apiRes = await fetch(`${process.env.API_URL}/auth/change-password`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ currentPassword, newPassword })
