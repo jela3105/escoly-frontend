@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 const adminRoutes = require('./routes/admin');
-//const tutorRoutes = require('./routes/tutor');
+const tutorRoutes = require('./routes/tutor');
 //const profesorRoutes = require('./routes/profesor');
 
 app.set('view engine', 'ejs');
@@ -63,7 +63,7 @@ app.post('/login', async (req, res) => {
 
 // Rutas protegidas
 app.use('/admin', adminRoutes);
-//app.use('/tutor', tutorRoutes);
+app.use('/tutor', tutorRoutes);
 //app.use('/profesor', profesorRoutes);
 
 app.listen(3001, () => {
