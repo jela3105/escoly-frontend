@@ -74,3 +74,7 @@ async function saveStudent() {
         console.log(response.message);
     }
 }
+
+async function editTeacher() {
+    document.getElementById('editarProfesorForm').submit();
+}

@@ -235,4 +235,42 @@ router.post('/changePassword', async (req, res) => {
 
 });
 
+router.post('/editarProfesor', async (req, res) => {
+    const { email, names, fathersLastName, mothersLastName } = req.body;
+    const teacherId = req.query.teacherId;
+
+    console.log(req.body)
+
+    const apiRes = await fetch(`${process.env.API_URL}/admin/users/${teacherId}`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, names, fathersLastName, mothersLastName })
+    });
+
+    const data = await apiRes.json();
+
+    if (!apiRes.ok) {
+
+        let teacher;
+        for (teacher of req.app.locals.teachers) {
+            if (teacher.id == teacherId) {
+                break;
+            }
+        }
+
+        console.log(teacher)
+
+        res.render('admin/editarProfesor', {
+            user: req.session.user,
+            errorMessage: data.error || 'Error al editar el profesor. Por favor, intente nuevamente.',
+            teacher: { id: teacherId, names: names, fatherLastName: fathersLastName, motherLastName: mothersLastName, email: email }
+        });
+
+        return;
+    }
+
+    res.redirect('/admin/profesores');
+
+});
+
 module.exports = router;
