@@ -1,77 +1,69 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Index Admin</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='tutorResources.css'>
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen"
+        href="tutorResources.css" />
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
 </head>
-
-<body>
-    <input type="checkbox" name="" id="hamburguesa">
+<body> <input type="checkbox" name="" id="hamburguesa" />
     <div class="barra-lateral">
-
         <div class="lateral-titulo">
             <h2><span class="lab la-accusoft"></span>Escoly</h2>
         </div>
         <div class="menu-lateral">
             <ul>
-                <li>
-                    <a class="activo"><span class="las la-undo"></span><span>Pagina Principal</span></a>
+                <li> <a class="activo"><span
+                            class="las la-undo"></span><span>Pagina
+                            Principal</span></a> </li>
+                <li> <a href="/tutor/password"><span
+                            class="las la-lock"></span><span>Password</span></a>
                 </li>
-                <li>
-                    <a href="/tutor/password"><span class="las la-lock"></span><span>Password</span></a>
+                <li> <a href="/tutor/soporte"><span
+                            class="las la-universal-access"></span><span>Soporte</span></a>
                 </li>
-                <li>
-                    <a href="/tutor/soporte"><span class="las la-universal-access"></span><span>Soporte</span></a>
-                </li>
-                <li>
-                    <a href="/logout"><span class="las la-door-closed"></span><span>Cerrar Sesion</span></a>
-                </li>
+                <li> <a href="/logout"><span
+                            class="las la-door-closed"></span><span>Cerrar
+                            Sesion</span></a> </li>
             </ul>
         </div>
-
     </div>
-
     <div class="main">
         <header>
-            <h2>
-                <label for="hamburguesa">
-                    <span class="las la-bars"></span>
-                </label>
-                Tutor
-            </h2>
-            <div class="seccion-usuario">
-                <img src="../images/tutor.png" width="30px" height="30px" alt="">
+            <h2> <label for="hamburguesa"> <span class="las la-bars"></span>
+                </label> Tutor </h2>
+            <div class="seccion-usuario"> <img src="../images/tutor.png"
+                    width="30px" height="30px" alt="" />
                 <div>
-                    <h4>Tutor</h4>
-                    <small><%= user.name %></small>
+                    <h4>Tutor</h4> <small>
+                        <%= user.name %>
+                    </small>
                 </div>
             </div>
         </header>
-
         <main>
             <div class="contenido-gral-grid">
                 <div class="contenido">
                     <div class="tarjeta-contenido">
                         <div class="tarjeta-contenido-header">
-                            <h3>Alumno</h3>
-                            <button>Estatus<span class="las la-rss"></span></button>
+                            <h3>Alumno</h3> <button>Estatus<span
+                                    class="las la-rss"></span></button>
                         </div>
                         <div class="tarjeta-contenido-body">
                             <div class="table-responsive">
                                 <table width="100%">
                                     <thead>
                                         <tr>
-                                            <td>Apellido Paterno</td> 
-                                            <td>Apellido Materno</td> 
+                                            <td>Apellido Paterno</td>
+                                            <td>Apellido Materno</td>
                                             <td>Nombre</td>
-                                            <td>Grupo</td> 
-                                            <td>Profesor </td>   
-                                              
+                                            <td>Grupo</td>
+                                            <td>Profesor</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,12 +73,12 @@
                                             <td>Diego</td>
                                             <td>6A</td>
                                             <td>Oscar Martinez</td>
-                                            
                                         </tr>
-                                        
                                     </tbody>
                                 </table>
-                            </div>
+                            </div><gmp-map center="37.4220656,-122.0840897"
+                                zoom="10" map-id="DEMO_MAP_ID"
+                                style="height: 400px"></gmp-map>
                         </div>
                     </div>
                 </div>
@@ -95,20 +87,19 @@
                 <div class="contenido">
                     <div class="tarjeta-contenido">
                         <div class="tarjeta-contenido-header">
-                            <h3>Alumno</h3>
-                            <button>Estatus<span class="las la-rss"></span></button>
+                            <h3>Alumno</h3> <button>Estatus<span
+                                    class="las la-rss"></span></button>
                         </div>
                         <div class="tarjeta-contenido-body">
                             <div class="table-responsive">
                                 <table width="100%">
                                     <thead>
                                         <tr>
-                                            <td>Apellido Paterno</td> 
-                                            <td>Apellido Materno</td> 
+                                            <td>Apellido Paterno</td>
+                                            <td>Apellido Materno</td>
                                             <td>Nombre</td>
-                                            <td>Grupo</td> 
-                                            <td>Profesor </td>   
-                                               
+                                            <td>Grupo</td>
+                                            <td>Profesor</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -118,9 +109,7 @@
                                             <td>Diego</td>
                                             <td>6A</td>
                                             <td>Oscar Martinez</td>
-                                            
                                         </tr>
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -130,7 +119,8 @@
             </div>
         </main>
     </div>
-
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=<%= mapsApiKey %>&loading=async&libraries=maps&v=beta"
+        defer></script>
 </body>
-
 </html>
