@@ -251,15 +251,6 @@ router.post('/editarProfesor', async (req, res) => {
 
     if (!apiRes.ok) {
 
-        let teacher;
-        for (teacher of req.app.locals.teachers) {
-            if (teacher.id == teacherId) {
-                break;
-            }
-        }
-
-        console.log(teacher)
-
         res.render('admin/editarProfesor', {
             user: req.session.user,
             errorMessage: data.error || 'Error al editar el profesor. Por favor, intente nuevamente.',
