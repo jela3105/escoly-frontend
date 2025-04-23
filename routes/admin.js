@@ -239,8 +239,6 @@ router.post('/editarProfesor', async (req, res) => {
     const { email, names, fathersLastName, mothersLastName } = req.body;
     const teacherId = req.query.teacherId;
 
-    console.log(req.body)
-
     const apiRes = await fetch(`${process.env.API_URL}/admin/users/${teacherId}`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
