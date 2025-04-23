@@ -38,6 +38,11 @@
     padding-right: 1rem;
 }
 
+.map {
+    height: 400px;
+    width: 100%;
+}
+
 .menu-lateral {
     margin-top: 1rem;
 }

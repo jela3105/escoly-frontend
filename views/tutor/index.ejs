@@ -11,10 +11,7 @@
     <link rel="stylesheet"
         href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
     <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
+
     </style>
 </head>
 
@@ -49,72 +46,63 @@
             </div>
         </header>
         <main>
-            <div class="contenido-gral-grid">
-                <div class="contenido">
-                    <div class="tarjeta-contenido">
-                        <div class="tarjeta-contenido-header">
-                            <h3>Alumno</h3> <button>Estatus<span class="las la-rss"></span></button>
-                        </div>
-                        <div class="tarjeta-contenido-body">
-                            <div class="table-responsive">
-                                <table width="100%">
-                                    <thead>
-                                        <tr>
-                                            <td>Apellido Paterno</td>
-                                            <td>Apellido Materno</td>
-                                            <td>Nombre</td>
-                                            <td>Grupo</td>
-                                            <td>Profesor</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Rivera</td>
-                                            <td>Corona</td>
-                                            <td>Diego</td>
-                                            <td>6A</td>
-                                            <td>Oscar Martinez</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="map"></div>
 
-                        </div>
-                    </div>
-                    <div class="contenido-gral-grid">
-                        <div class="contenido">
-                            <div class="tarjeta-contenido">
-                                <div class="tarjeta-contenido-header">
-                                    <h3>Alumno</h3> <button>Estatus<span class="las la-rss"></span></button>
+            <% students.forEach((student)=> { %>
+                <div class="contenido-gral-grid">
+                    <div class="contenido">
+                        <div class="tarjeta-contenido">
+                            <div class="tarjeta-contenido-header">
+                                <h3>Alumno</h3> <button>Estatus<span class="las la-rss"></span></button>
+                            </div>
+                            <div class="tarjeta-contenido-body">
+                                <div class="table-responsive">
+                                    <table width="100%">
+                                        <thead>
+                                            <tr>
+                                                <td>Apellido Paterno</td>
+                                                <td>Apellido Materno</td>
+                                                <td>Nombre</td>
+                                                <td>Grupo</td>
+                                                <td>Profesor</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <%= student.fathersLastName%>
+                                                </td>
+                                                <td>
+                                                    <%= student.motherLastName %>
+                                                </td>
+                                                <td>
+                                                    <%= student.names %>
+                                                </td>
+                                                <td>
+                                                    <%= student.year + student.groupName %>
+                                                </td>
+                                                <td>
+                                                    <%= student.teacher %>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="tarjeta-contenido-body">
-                                    <div class="table-responsive">
-                                        <table width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <td>Apellido Paterno</td>
-                                                    <td>Apellido Materno</td>
-                                                    <td>Nombre</td>
-                                                    <td>Grupo</td>
-                                                    <td>Profesor</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Rivera</td>
-                                                    <td>Corona</td>
-                                                    <td>Diego</td>
-                                                    <td>6A</td>
-                                                    <td>Oscar Martinez</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <% if (student.deviceId) { %>
+                                    <div id="map<%= student.deviceId %>" class="map"></div>
+                                    <% } else { %>
+                                        <div style="color: red;">
+                                            No hay dispositivo vinculado
+                                        </div>
+                                        <% } %>
                             </div>
                         </div>
                     </div>
+                </div>
+                <% }); %>
+
+
+
+
         </main>
     </div>
     <script src="socketTutor.js"></script>

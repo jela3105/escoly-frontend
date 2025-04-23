@@ -4,8 +4,21 @@ const { requiereLogin, soloRol } = require('../auth');
 
 router.use(requiereLogin, soloRol(1));
 
-router.get('/', (req, res) => {
-    res.render('tutor/index', { user: req.session.user, mapsApiKey: process.env.MAPS_API_KEY });
+router.get('/', async (req, res) => {
+
+    const apiRes = await fetch(`${process.env.API_URL}/guardian/students`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+    })
+
+    const students = await apiRes.json();
+    console.log(students);
+
+    res.render('tutor/index', {
+        user: req.session.user,
+        mapsApiKey: process.env.MAPS_API_KEY,
+        students
+    });
 });
 
 router.get('/password', (req, res) => {
