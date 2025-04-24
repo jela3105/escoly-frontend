@@ -72,7 +72,7 @@
                                                     <%= student.fathersLastName%>
                                                 </td>
                                                 <td>
-                                                    <%= student.motherLastName %>
+                                                    <%= student.mothersLastName %>
                                                 </td>
                                                 <td>
                                                     <%= student.names %>
@@ -88,7 +88,7 @@
                                     </table>
                                 </div>
                                 <% if (student.deviceId) { %>
-                                    <div id="map<%= student.deviceId %>" class="map"></div>
+                                    <div id="<%= student.deviceId %>" class="map"></div>
                                     <% } else { %>
                                         <div style="color: red;">
                                             No hay dispositivo vinculado
@@ -106,7 +106,7 @@
         </main>
     </div>
     <script src="socketTutor.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=<%= mapsApiKey %>&loading=async&callback=initMap">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=<%= mapsApiKey %>&loading=async&callback=initMaps">
     </script>
 </body>
 

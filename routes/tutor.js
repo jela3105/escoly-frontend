@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
     })
 
     const students = await apiRes.json();
-    console.log(students);
 
     res.render('tutor/index', {
         user: req.session.user,
@@ -20,6 +19,21 @@ router.get('/', async (req, res) => {
         students
     });
 });
+
+router.get('/students', async (req, res) => {
+    const apiRes = await fetch(`${process.env.API_URL}/guardian/students`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
+    })
+
+    const students = await apiRes.json();
+    console.log(students);
+
+    res.status(200).json({
+        students
+    });
+});
+
 
 router.get('/password', (req, res) => {
     res.render('tutor/password', {
