@@ -1,8 +1,14 @@
 // server.js
 const express = require('express');
 const session = require('express-session');
+const http = require('http');
+const { Server } = require('socket.io');
+const { io: ClientIO } = require('socket.io-client');
 const path = require('path');
+
 const app = express();
+const server = http.createServer(app);
+
 require('dotenv').config()
 
 const adminRoutes = require('./routes/admin');
@@ -15,25 +21,22 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(session({
-    secret: 'clave-secreta',
+const sessionMiddleware = session({
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
         sameSite: 'lax'
     }
-}));
+})
+app.use(sessionMiddleware);
 
 // Página de inicio/login
 app.get('/', (req, res) => {
     res.render('login');
 });
 
-app.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
-});
 
 // Login
 app.post('/login', async (req, res) => {
@@ -68,6 +71,51 @@ app.use('/admin', adminRoutes);
 app.use('/tutor', tutorRoutes);
 //app.use('/profesor', profesorRoutes);
 
-app.listen(3001, () => {
+// Inicializar socket.io
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        credentials: true
+    }
+});
+
+// Adaptar sesiones a sockets
+io.use((socket, next) => {
+    sessionMiddleware(socket.request, {}, next);
+});
+
+// Proxy de conexión al backend
+io.on('connection', (clientSocket) => {
+    const req = clientSocket.request;
+    const token = req.session.token;
+
+    if (!token) {
+        return clientSocket.disconnect(true);
+    }
+
+    const backendSocket = ClientIO(process.env.API_URL, {
+        auth: { token }
+    });
+
+    // Relay de mensajes
+    clientSocket.on('subscribe-guardian', () => {
+        backendSocket.emit('subscribe-guardian', token);
+    });
+
+    backendSocket.on('location-update', (data) => {
+        clientSocket.emit('location-update', data);
+    });
+
+    clientSocket.on('disconnect', () => {
+        backendSocket.disconnect();
+    });
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+
+server.listen(3001, () => {
     console.log('Servidor frontend en http://localhost:3001');
 });
