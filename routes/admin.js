@@ -182,20 +182,17 @@ router.post('/students/preregister', async (req, res) => {
             body: JSON.stringify({ names: element.name, fathersLastName: element.lastName, mothersLastName: element.secondLastName, email: element.email })
         });
         const data = await apiRes.json();
-        console.log(data);
     }));
     let emails = [];
     tutors.forEach(async element => {
         emails.push(element.email);
     });
-    console.log(emails);
     const apiRes = await fetch(`${process.env.API_URL}/admin/students/register`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${req.session.token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ names: studentName, mothersLastName: studentLastName, fathersLastName: studentSecondLastName, guardians: emails })
     });
     const data = await apiRes.json();
-    console.log(data);
 
     if (req.query.redirect === 'true') {
         return res.json({ redirectUrl: '/admin/alumnos' });

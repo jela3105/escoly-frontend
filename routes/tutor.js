@@ -27,7 +27,6 @@ router.get('/students', async (req, res) => {
     })
 
     const students = await apiRes.json();
-    console.log(students);
 
     res.status(200).json({
         students

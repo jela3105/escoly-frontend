@@ -8,7 +8,7 @@ async function initMaps() {
 
     const students = await apiRes.json();
 
-    const initialPosition = { lat: 19.4326, lng: -99.1332 };// Debe ser punto medio entre escuela y casa
+    const initialPosition = { lat: 19.3296515, lng: -99.1118858 };// Debe ser punto medio entre escuela y casa
 
     for (const student of students.students) {
         if (!student.deviceId) {
@@ -72,7 +72,7 @@ function connectSocket() {
             }
 
             maps[data.deviceId].marker.setPosition(newPosition);
-            map.setCenter(newPosition);
+            //map.setCenter(newPosition);
 
         } else {
             console.warn(`No se encontró un mapa para el deviceId: ${data.deviceId}`);
