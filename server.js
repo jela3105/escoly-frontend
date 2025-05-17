@@ -116,6 +116,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-server.listen(3001, () => {
+const port = process.env.PORT || 3001;
+server.listen(port, () => {
     console.log('Servidor frontend en http://localhost:3001');
 });
