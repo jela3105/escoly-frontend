@@ -35,6 +35,7 @@ router.get('/alumnos', async (req, res) => {
 
 router.get('/password', async (req, res) => {
     res.render('admin/passwordAdmin', {
+        serverUrl: process.env.API_URL,
         user: req.session.user,
         formData: { currentPassword: '', newPassword: '', confirmNewPassword: '' }
     });
@@ -46,6 +47,7 @@ router.get('/soporte', async (req, res) => {
 
 router.get('/nuevoProfesor', async (req, res) => {
     res.render('admin/nuevoProfesor', {
+        serverUrl: process.env.API_URL,
         user: req.session.user,
         formData: { names: '', fathersLastName: '', mothersLastName: '', email: '' }
     });
@@ -67,7 +69,10 @@ router.get('/editarProfesor', async (req, res) => {
             break;
         }
     }
-    res.render('admin/editarProfesor', { user: req.session.user, teacher });
+    res.render('admin/editarProfesor', {
+        user: req.session.user, teacher,
+        serverUrl: process.env.API_URL,
+    });
 });
 
 router.get('/asignarAlumnos', async (req, res) => {
@@ -87,11 +92,15 @@ router.get('/consultarAlumno', async (req, res) => {
 });
 
 router.get('/nuevoAlumno', async (req, res) => {
-    res.render('admin/nuevoAlumno', { user: req.session.user });
+    res.render('admin/nuevoAlumno', {
+        user: req.session.user,
+        serverUrl: process.env.API_URL,
+    });
 });
 
 router.get('/nuevoGrupo', async (req, res) => {
     res.render('admin/nuevoGrupo', {
+        serverUrl: process.env.API_URL,
         user: req.session.user,
         formData: { year: '', groupp: '' },
         errorMessage: undefined
@@ -111,6 +120,7 @@ router.post('/registrarProfesor', async (req, res) => {
 
     if (!apiRes.ok) {
         return res.status(401).render('admin/nuevoProfesor', {
+            serverUrl: process.env.API_URL,
             user: req.session.user,
             errorMessage: data.error || 'Error al registrar el profesor. Por favor, intente nuevamente.',
             formData: req.body
@@ -142,6 +152,7 @@ router.post('/registrarGrupo', async (req, res) => {
 
     if (!apiRes.ok) {
         return res.status(401).render('admin/nuevoGrupo', {
+            serverUrl: process.env.API_URL,
             user: req.session.user,
             errorMessage: data.error || 'Error al registrar el grupo. Por favor, intente nuevamente.',
             formData: req.body
@@ -164,6 +175,7 @@ router.post('/registrarAlumno', async (req, res) => {
 
     if (!apiRes.ok) {
         return res.status(401).render('admin/nuevoAlumno', {
+            serverUrl: process.env.API_URL,
             user: req.session.user,
             errorMessage: data.error || 'Error al registrar el alumno. Por favor, intente nuevamente.',
             formData: req.body
@@ -206,6 +218,7 @@ router.post('/changePassword', async (req, res) => {
 
     if (newPassword !== confirmNewPassword) {
         return res.status(400).render('admin/passwordAdmin', {
+            serverUrl: process.env.API_URL,
             user: req.session.user,
             formData: req.body,
             errorMessage: 'Las contraseñas nuevas no coinciden.'
@@ -222,6 +235,7 @@ router.post('/changePassword', async (req, res) => {
 
     if (!apiRes.ok) {
         return res.status(401).render('admin/passwordAdmin', {
+            serverUrl: process.env.API_URL,
             user: req.session.user,
             errorMessage: data.error || 'Error al cambiar la contraseña. Por favor, intente mas tarde.'
         });
@@ -247,6 +261,7 @@ router.post('/editarProfesor', async (req, res) => {
     if (!apiRes.ok) {
 
         res.render('admin/editarProfesor', {
+            serverUrl: process.env.API_URL,
             user: req.session.user,
             errorMessage: data.error || 'Error al editar el profesor. Por favor, intente nuevamente.',
             teacher: { id: teacherId, names: names, fatherLastName: fathersLastName, motherLastName: mothersLastName, email: email }

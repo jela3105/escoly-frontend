@@ -61,7 +61,7 @@ async function saveStudent() {
         studentSecondLastName,
         tutors
     };
-    const apiRes = await fetch(`http://localhost:3001/admin/students/preregister?redirect=true`, {
+    const apiRes = await fetch(`http://api.escoly.org/admin/students/preregister?redirect=true`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
