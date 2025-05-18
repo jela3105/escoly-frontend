@@ -42,7 +42,6 @@ app.get('/', (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-
     const apiRes = await fetch(`${process.env.API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

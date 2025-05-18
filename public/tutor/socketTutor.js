@@ -1,7 +1,7 @@
 const maps = {}; // Objeto para almacenar referencias a mapas y marcadores por deviceId
 
 async function initMaps() {
-    const apiRes = await fetch("http://localhost:3001/tutor/students", {
+    const apiRes = await fetch("/tutor/students", {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
     });
@@ -43,7 +43,6 @@ function connectSocket() {
     });
 
     socket.on("location-update", (data) => {
-        console.log(data);
 
         const lat = Number(data.lat);
         const lng = Number(data.lng);

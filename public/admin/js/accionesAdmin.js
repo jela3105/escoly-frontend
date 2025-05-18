@@ -61,7 +61,7 @@ async function saveStudent() {
         studentSecondLastName,
         tutors
     };
-    const apiRes = await fetch(`http://api.escoly.org/admin/students/preregister?redirect=true`, {
+    const apiRes = await fetch(`/admin/students/preregister?redirect=true`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -71,7 +71,7 @@ async function saveStudent() {
     if (response.redirectUrl) {
         window.location.href = response.redirectUrl;
     } else {
-        console.log(response.message);
+        console.log(JSON.stringify(response));
     }
 }
 
