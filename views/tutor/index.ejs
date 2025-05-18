@@ -47,7 +47,7 @@
         </header>
         <main>
 
-            <% students.forEach((student)=> { %>
+            <% for (const student of students) { %>
                 <div class="contenido-gral-grid">
                     <div class="contenido">
                         <div class="tarjeta-contenido">
@@ -69,7 +69,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <%= student.fathersLastName%>
+                                                    <%= student.fathersLastName %>
                                                 </td>
                                                 <td>
                                                     <%= student.mothersLastName %>
@@ -107,18 +107,14 @@
                                             No se ha recibido actualización de ubicación en este momento
                                         </div>
                                     </div>
-                                    <% } else { %>
-                                        <div style="color: red;">No hay dispositivo vinculado</div>
-                                        <% } %>
-
+                                <% } else { %>
+                                    <div style="color: red;">No hay dispositivo vinculado</div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
                 </div>
-                <% }); %>
-
-
-
+            <% } %>
 
         </main>
     </div>
