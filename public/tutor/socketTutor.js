@@ -1,4 +1,13 @@
 const maps = {}; // Objeto para almacenar referencias a mapas y marcadores por deviceId
+const timeDifferences = []; // Array para almacenar las diferencias de tiempo
+
+function calculateAverageTimeDifference() {
+    if (timeDifferences.length === 0) return;
+
+    const sum = timeDifferences.reduce((acc, diff) => acc + diff, 0);
+    const average = sum / timeDifferences.length;
+    console.log(`Promedio de diferencia de tiempo (ms): ${average}`);
+}
 
 async function initMaps() {
     const apiRes = await fetch("/tutor/students", {
@@ -34,6 +43,7 @@ function connectSocket() {
     const socket = io();
 
     socket.on('connect', () => {
+        console.log("Conectado al servidor de sockets");
     });
 
     socket.emit("subscribe-guardian", {});
@@ -43,10 +53,23 @@ function connectSocket() {
     });
 
     socket.on("location-update", (data) => {
-
         const lat = Number(data.lat);
         const lng = Number(data.lng);
         const newPosition = { lat, lng };
+        const dateTime = new Date(data.dateTime);
+        const now = new Date();
+
+        // Calcular la diferencia de tiempo en milisegundos
+        const timeDifference = now - dateTime;
+        timeDifferences.push(timeDifference);
+
+        // Mantener solo los últimos 50 valores
+        if (timeDifferences.length > 50) {
+            timeDifferences.shift();
+        }
+
+        // Calcular e imprimir el promedio
+        calculateAverageTimeDifference();
 
         if (maps[data.deviceId]) {
             const { map, marker } = maps[data.deviceId];
@@ -71,8 +94,6 @@ function connectSocket() {
             }
 
             maps[data.deviceId].marker.setPosition(newPosition);
-            //map.setCenter(newPosition);
-
         } else {
             console.warn(`No se encontró un mapa para el deviceId: ${data.deviceId}`);
         }
