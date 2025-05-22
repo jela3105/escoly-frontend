@@ -13,8 +13,6 @@ router.get('/', async (req, res) => {
 
     const students = await apiRes.json();
 
-    console.log(students)
-
     res.render('tutor/index', {
         user: req.session.user,
         mapsApiKey: process.env.MAPS_API_KEY,
