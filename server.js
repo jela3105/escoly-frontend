@@ -105,6 +105,10 @@ io.on('connection', (clientSocket) => {
         clientSocket.emit('location-update', data);
     });
 
+    backendSocket.on('safe-zone-update', (data) => {
+        clientSocket.emit('safe-zone-update', data)
+    })
+
     clientSocket.on('disconnect', () => {
         backendSocket.disconnect();
     });

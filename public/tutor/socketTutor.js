@@ -98,4 +98,8 @@ function connectSocket() {
             console.warn(`No se encontró un mapa para el deviceId: ${data.deviceId}`);
         }
     });
+
+    socket.on("safe-zone-update", (data) => {
+        console.log(JSON.stringify(data))
+    })
 }
