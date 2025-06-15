@@ -63,9 +63,10 @@ function connectSocket() {
         const timeDifference = now - dateTime;
         timeDifferences.push(timeDifference);
 
-        // Mantener solo los últimos 50 valores
-        if (timeDifferences.length > 50) {
+        // Mantener solo los últimos 100 valores
+        if (timeDifferences.length > 100) {
             timeDifferences.shift();
+            console.log(timeDifferences);
         }
 
         // Calcular e imprimir el promedio
