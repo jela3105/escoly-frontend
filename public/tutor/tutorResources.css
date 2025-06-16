@@ -16,6 +16,18 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.status-animated {
+    transition: background-color 0.5s, color 0.5s;
+}
+.status-safe {
+    background-color: #145A32 !important;
+    color: #ffffff !important;
+}
+.status-moving {
+    background-color: #102040 !important;
+    color: #ffffff !important;
+}
+
 .barra-lateral {
     width: 345px;
     position: fixed;

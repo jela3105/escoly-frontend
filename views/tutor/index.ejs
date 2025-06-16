@@ -52,7 +52,10 @@
                     <div class="contenido">
                         <div class="tarjeta-contenido">
                             <div class="tarjeta-contenido-header">
-                                <h3>Alumno</h3> <button>Estatus<span class="las la-rss"></span></button>
+                                <h3>Alumno</h3> 
+                                <button id="status-button-<%= student.deviceId %>" style="background-color: rgba(128, 128, 128, 0.303); color: black;">
+                                    Sin información recibida <span class="las la-rss"></span>
+                                </button>
                             </div>
                             <div class="tarjeta-contenido-body">
                                 <div class="table-responsive">

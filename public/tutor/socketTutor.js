@@ -95,12 +95,33 @@ function connectSocket() {
             }
 
             maps[data.deviceId].marker.setPosition(newPosition);
+
+            const button = document.getElementById(`status-button-${data.deviceId}`);
+            if (button) {
+                button.classList.add('status-animated');
+                button.classList.remove('status-safe');
+                button.classList.add('status-moving');
+                button.innerHTML = `En movimiento <span class="las la-rss"></span>`;
+            }
+
+            //center map to the marker with a smooth animation
+            map.panTo(newPosition);
+            map.setZoom(18); // Zoom in to see the marker clearly
+
         } else {
             console.warn(`No se encontró un mapa para el deviceId: ${data.deviceId}`);
         }
     });
 
     socket.on("safe-zone-update", (data) => {
-        console.log(JSON.stringify(data))
-    })
+        if (data.inSafeZone === true) {
+            const button = document.getElementById(`status-button-${data.deviceId}`);
+            if (button) {
+                button.classList.add('status-animated');
+                button.classList.remove('status-moving');
+                button.classList.add('status-safe');
+                button.innerHTML = `En zona segura <span class="las la-rss"></span>`;
+            }
+        }
+    });
 }
