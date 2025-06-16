@@ -12,18 +12,44 @@
 </head>
 
 <body class="body3">
+    <div class="login-main-container">
+        <div class="login-form-side">
+            <div class="logo-bg"></div>
+            <div class="container" id="container">
+                
+                <div class="form-container sign-in-container">
+                    <form action="#">
+                        <h1>Sign in</h1>
+                        <div class="social-container">
 
-    <div class="contenedor">
-        <form id="loginForm" class="Login">
-            <p class="titulo">
-                Iniciar Sesion
-            </p>
-            <input type="text" id="email" value="" placeholder="Correo Electronico" autofocus required>
-            <input type="password" id="password" value="" placeholder="Password" required autofocus>
-            <button type="submit">Iniciar Sesion</button>
-        </form>
-        <div>
-            <button onclick="" id="btn_token">¿Olvido su contraseña?</button> 
+                        </div>
+                        <span>Ingrese sus credenciales</span>
+                        <input type="email" id="email" placeholder="Email" required autofocus/>
+                        <input type="password" id="password" placeholder="Password" required autofocus/>
+                        <a href="#" id="btn_token">¿Olvidó su contraseña?</a>
+                        <button>Iniciar Sesion</button>
+                    </form>
+                </div>
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <h1>Bienvenido de nuevo!</h1>
+                            <p>Para mantenerte conectado con nosotros, por favor inicia sesión con tu información personal</p>
+                            <button class="ghost" id="signIn">Iniciar Sesión</button>
+                        </div>
+                        <div class="overlay-panel overlay-right">
+                            <h1>Hola, Bienvenido a Escoly!</h1>
+                            <p>Una plataforma confiable para la supervisión continua de la ubicación.</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p>
+                    Escoly, una plataforma segura.
+                </p>
+            </footer>
         </div>
     </div>
     <script src="login.js"></script>
