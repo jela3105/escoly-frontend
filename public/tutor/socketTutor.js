@@ -104,9 +104,6 @@ function connectSocket() {
                 button.innerHTML = `En movimiento <span class="las la-rss"></span>`;
             }
 
-            //center map to the marker with a smooth animation
-            map.panTo(newPosition);
-            map.setZoom(18); // Zoom in to see the marker clearly
 
         } else {
             console.warn(`No se encontró un mapa para el deviceId: ${data.deviceId}`);
