@@ -53,9 +53,11 @@
                         <div class="tarjeta-contenido">
                             <div class="tarjeta-contenido-header">
                                 <h3>Alumno</h3> 
+                                <% if (student.deviceId) { %>
                                 <button id="status-button-<%= student.deviceId %>" style="background-color: rgba(128, 128, 128, 0.303); color: black;">
                                     Sin información recibida <span class="las la-rss"></span>
                                 </button>
+                                <% } %>
                             </div>
                             <div class="tarjeta-contenido-body">
                                 <div class="table-responsive">
@@ -112,6 +114,39 @@
                                     </div>
                                 <% } else { %>
                                     <div style="color: red;">No hay dispositivo vinculado</div>
+                                    <div style="margin: 10px 0;">
+                                        <input type="text" id="deviceIdInput-<%= student.id %>" placeholder="Ingresa el ID del dispositivo"
+                                            style="padding: 6px 10px; border-radius: 4px; border: 1px solid #ccc;">
+                                        <button onclick="vincularDispositivo('<%= student.id %>')" style="padding: 6px 16px; border-radius: 4px; background: #102040; color: #fff; border: none; cursor: pointer;">
+                                            Vincular dispositivo
+                                        </button>
+                                    </div>
+                                    <script>
+                                        function vincularDispositivo(studentId) {
+                                            const input = document.getElementById(`deviceIdInput-${studentId}`);
+                                            const deviceId = input.value.trim();
+                                            if (!deviceId) {
+                                                alert('Por favor ingresa un ID de dispositivo.');
+                                                return;
+                                            }
+                                            fetch(`/tutor/vincular-dispositivo`, {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ studentId, deviceId })
+                                            })
+                                            .then(res => {
+                                                if (!res.ok) throw new Error('No se pudo vincular el dispositivo');
+                                                return res.json();
+                                            })
+                                            .then(data => {
+                                                alert('Dispositivo vinculado correctamente');
+                                                location.reload();
+                                            })
+                                            .catch(err => {
+                                                alert('ID de dispositivo no válido o error al vincular: ' + err.message);
+                                            });
+                                        }
+                                    </script>
                                 <% } %>
                             </div>
                         </div>
