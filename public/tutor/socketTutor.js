@@ -1,6 +1,114 @@
 const maps = {}; // Objeto para almacenar referencias a mapas y marcadores por deviceId
 const timeDifferences = []; // Array para almacenar las diferencias de tiempo
 
+// Referencias a elementos del DOM
+const openModalBtn = document.getElementById('openModalBtn');
+const locationModal = document.getElementById('locationModal');
+const closeButton = document.querySelector('.close-button');
+const locationButtonsContainer = document.getElementById('locationButtons');
+const rangeInput = document.getElementById('myRange');
+const rangeValueSpan = document.getElementById('rangeValue');
+
+let map; // Variable global para el mapa
+let marker; // Variable global para el marcador
+
+// Datos de ejemplo para las ubicaciones
+const locations = [
+    { name: "Casa 1", lat: 19.432608, lng: -99.133209 },
+    { name: "Casa 2", lat: 20.659800, lng: -103.349800 },
+];
+
+// --- Funcionalidad del Modal ---
+openModalBtn.addEventListener('click', () => {
+    locationModal.style.display = 'flex'; // Usar flex para centrar el contenido
+    // Asegurarse de que el mapa se inicialice o se redibuje correctamente al abrir el modal
+    if (map) {
+        google.maps.event.trigger(map, 'resize');
+        // Centrar el mapa en la primera ubicación al abrir
+        if (locations.length > 0) {
+            map.setCenter({ lat: locations[0].lat, lng: locations[0].lng });
+            if (marker) {
+                marker.setPosition({ lat: locations[0].lat, lng: locations[0].lng });
+            } else {
+                marker = new google.maps.Marker({
+                    position: { lat: locations[0].lat, lng: locations[0].lng },
+                    map: map,
+                    title: locations[0].name
+                });
+            }
+        }
+    } else {
+        // Si el mapa aún no se ha inicializado, esto lo hará.
+        // La función initMap es llamada por el script de la API de Google Maps.
+    }
+});
+
+closeButton.addEventListener('click', () => {
+    locationModal.style.display = 'none';
+});
+
+// Cerrar el modal haciendo clic fuera de él
+window.addEventListener('click', (event) => {
+    if (event.target == locationModal) {
+        locationModal.style.display = 'none';
+    }
+});
+
+// --- Inicialización del Mapa ---
+function initModalMap() {
+    // Coordenadas iniciales (por ejemplo, Ciudad de México)
+    const initialLatLng = { lat: 19.432608, lng: -99.133209 };
+
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 18,
+        center: initialLatLng,
+    });
+
+    // Crea el marcador inicial
+    marker = new google.maps.Marker({
+        position: initialLatLng,
+        map: map,
+        title: "Ubicación Actual"
+    });
+
+    // Generar botones de ubicación después de que el mapa esté listo
+    createLocationButtons();
+}
+
+// --- Generación de Botones de Ubicación ---
+function createLocationButtons() {
+    locations.forEach(location => {
+        const button = document.createElement('button');
+        button.classList.add('location-button');
+        button.textContent = location.name;
+        button.dataset.lat = location.lat;
+        button.dataset.lng = location.lng;
+
+        button.addEventListener('click', () => {
+            const lat = parseFloat(button.dataset.lat);
+            const lng = parseFloat(button.dataset.lng);
+            const newLatLng = { lat: lat, lng: lng };
+
+            // Mueve el mapa al nuevo centro
+            map.setCenter(newLatLng);
+
+            // Actualiza la posición del marcador
+            marker.setPosition(newLatLng);
+            marker.setTitle(location.name); // Actualiza el título del marcador
+        });
+        locationButtonsContainer.appendChild(button);
+    });
+}
+
+// --- Barra de Rango ---
+rangeInput.addEventListener('input', () => {
+    rangeValueSpan.textContent = rangeInput.value;
+});
+
+// Asegurarse de que el mapa se inicialice incluso si el modal no se abre de inmediato (aunque initMap se llama por el script de la API)
+// Esto es más un respaldo o si no estás usando el callback en la URL de la API.
+// window.onload = initMap; // Esto podría causar un doble intento si ya usas callback=initMap
+
 function calculateAverageTimeDifference() {
     if (timeDifferences.length === 0) return;
 
@@ -10,6 +118,7 @@ function calculateAverageTimeDifference() {
 }
 
 async function initMaps() {
+    initModalMap();
     const apiRes = await fetch("/tutor/students", {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },

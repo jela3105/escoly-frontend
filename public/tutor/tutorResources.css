@@ -278,6 +278,27 @@ table{
     padding: 1rem;
 }
 
+.tarjeta-contenido-body button:hover{
+    background: #fff;
+    border-radius: 10px;
+    color: var(--main-color);
+    font-size: .8rem;
+    padding: .5rem 1rem;
+    border: 1px solid var(--main-color);
+}
+
+/* Todo: Alinear el boton hasta la derecha*/
+.tarjeta-contenido-body button{
+    margin-top: 10px;
+    background: var(--main-color);
+    border-radius: 10px;
+    color: #fff;
+    font-size: .8rem;
+    padding: .5rem 1rem;
+    border: 1px solid var(--main-color);
+    align-self: flex-end;
+}
+
 .tarjeta-contenido-header{
     display: flex ;
     justify-content: space-between;
@@ -387,6 +408,96 @@ header h2 span{
     text-align: center;
     padding-right: 0rem;
 }
+
+.modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Ancho del modal */
+            max-width: 900px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            display: flex; /* Para las dos columnas */
+            gap: 20px;
+            position: relative;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .left-column {
+            flex: 1; /* Ocupa el 30% del espacio, por ejemplo */
+            min-width: 200px;
+            padding-right: 10px;
+            border-right: 1px solid #eee;
+        }
+
+        .right-column {
+            flex: 2; /* Ocupa el 70% restante */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .location-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .location-button:hover {
+            background-color: white;
+            color: var(--main-color);
+            border: 1px solid var(--main-color);
+        }
+
+        #map {
+            height: 400px; /* Altura fija para el mapa */
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+
+        .range-container {
+            text-align: center;
+        }
+
+        .range-container input[type="range"] {
+            width: 80%;
+            margin-top: 10px;
+        }
+
+        .range-container p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
 
 @media only screen and (max-width: 1200px){
     .barra-lateral {

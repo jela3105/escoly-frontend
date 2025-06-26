@@ -46,18 +46,17 @@
             </div>
         </header>
         <main>
-
             <% for (const student of students) { %>
                 <div class="contenido-gral-grid">
                     <div class="contenido">
                         <div class="tarjeta-contenido">
                             <div class="tarjeta-contenido-header">
                                 <h3>Alumno</h3> 
-                                <% if (student.deviceId) { %>
-                                <button id="status-button-<%= student.deviceId %>" style="background-color: rgba(128, 128, 128, 0.303); color: black;">
-                                    Sin información recibida <span class="las la-rss"></span>
-                                </button>
-                                <% } %>
+                                    <% if (student.deviceId) { %>
+                                    <button id="status-button-<%= student.deviceId %>" style="background-color: rgba(128, 128, 128, 0.303); color: black;">
+                                        Sin información recibida <span class="las la-rss"></span>
+                                    </button>
+                                    <% } %>
                             </div>
                             <div class="tarjeta-contenido-body">
                                 <div class="table-responsive">
@@ -112,6 +111,12 @@
                                             No se ha recibido actualización de ubicación en este momento
                                         </div>
                                     </div>
+                                    <div  style="display: flex; flex-direction: column;">
+                                        <button id="openModalBtn">
+                                            Zonas seguras
+                                            <i class="la la-ellipsis-v"></i>
+                                        </button>
+                                   </div>
                                 <% } else { %>
                                     <div style="color: red;">No hay dispositivo vinculado</div>
                                     <div style="margin: 10px 0;">
@@ -148,6 +153,7 @@
                                         }
                                     </script>
                                 <% } %>
+                                    
                             </div>
                         </div>
                     </div>
@@ -155,10 +161,29 @@
             <% } %>
 
         </main>
+         <div id="locationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="left-column" id="locationButtons">
+                <h3>Ubicaciones</h3>
+                </div>
+            <div class="right-column">
+                <div id="map"></div>
+                <div class="range-container">
+                    <p>Radio: <span id="rangeValue">0 m</span></p>
+                    <input type="range" id="myRange" min="0" max="250" value="0">
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <script src="socketTutor.js"></script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=<%= mapsApiKey %>&loading=async&callback=initMaps">
     </script>
+
+    <script>
+
+</script>
 </body>
 
 </html>
