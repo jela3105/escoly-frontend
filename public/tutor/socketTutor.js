@@ -11,31 +11,25 @@ const rangeValueSpan = document.getElementById('rangeValue');
 
 let map; // Variable global para el mapa
 let marker; // Variable global para el marcador
+let circle; // **Nueva variable global para el círculo**
+let currentLocation = null; // **Nueva variable para guardar la ubicación actual seleccionada**
 
 // Datos de ejemplo para las ubicaciones
 const locations = [
-    { name: "Casa 1", lat: 19.432608, lng: -99.133209 },
-    { name: "Casa 2", lat: 20.659800, lng: -103.349800 },
+    { name: "Casa 1", lat: 19.317987, lng: -99.106662 },
+    { name: "Casa 2", lat: 19.319310, lng: -99.104125 },
 ];
 
 // --- Funcionalidad del Modal ---
 openModalBtn.addEventListener('click', () => {
     locationModal.style.display = 'flex'; // Usar flex para centrar el contenido
-    // Asegurarse de que el mapa se inicialice o se redibuje correctamente al abrir el modal
     if (map) {
         google.maps.event.trigger(map, 'resize');
-        // Centrar el mapa en la primera ubicación al abrir
+        // Centrar el mapa en la primera ubicación y dibujar marcador/círculo al abrir
         if (locations.length > 0) {
-            map.setCenter({ lat: locations[0].lat, lng: locations[0].lng });
-            if (marker) {
-                marker.setPosition({ lat: locations[0].lat, lng: locations[0].lng });
-            } else {
-                marker = new google.maps.Marker({
-                    position: { lat: locations[0].lat, lng: locations[0].lng },
-                    map: map,
-                    title: locations[0].name
-                });
-            }
+            currentLocation = locations[0]; // Establecer la primera ubicación como la actual
+            map.setCenter({ lat: currentLocation.lat, lng: currentLocation.lng });
+            updateMarkerAndCircle(); // Llamar a esta función para dibujar/actualizar
         }
     } else {
         // Si el mapa aún no se ha inicializado, esto lo hará.
@@ -55,24 +49,19 @@ window.addEventListener('click', (event) => {
 });
 
 // --- Inicialización del Mapa ---
-function initModalMap() {
+function initMap() {
     // Coordenadas iniciales (por ejemplo, Ciudad de México)
-    const initialLatLng = { lat: 19.432608, lng: -99.133209 };
+    currentLocation = locations.length > 0 ? locations[0] : { lat: 19.432608, lng: -99.133209 };
 
     map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 18,
-        center: initialLatLng,
-    });
-
-    // Crea el marcador inicial
-    marker = new google.maps.Marker({
-        position: initialLatLng,
-        map: map,
-        title: "Ubicación Actual"
+        zoom: 20,
+        center: { lat: currentLocation.lat, lng: currentLocation.lng },
     });
 
     // Generar botones de ubicación después de que el mapa esté listo
     createLocationButtons();
+    // Dibujar el marcador y el círculo inicial
+    updateMarkerAndCircle();
 }
 
 // --- Generación de Botones de Ubicación ---
@@ -85,29 +74,56 @@ function createLocationButtons() {
         button.dataset.lng = location.lng;
 
         button.addEventListener('click', () => {
-            const lat = parseFloat(button.dataset.lat);
-            const lng = parseFloat(button.dataset.lng);
-            const newLatLng = { lat: lat, lng: lng };
-
-            // Mueve el mapa al nuevo centro
-            map.setCenter(newLatLng);
-
-            // Actualiza la posición del marcador
-            marker.setPosition(newLatLng);
-            marker.setTitle(location.name); // Actualiza el título del marcador
+            currentLocation = location; // Actualizar la ubicación actual
+            map.setCenter({ lat: currentLocation.lat, lng: currentLocation.lng });
+            updateMarkerAndCircle(); // Actualizar marcador y círculo
         });
         locationButtonsContainer.appendChild(button);
     });
 }
 
+// --- Función para actualizar el Marcador y el Círculo ---
+function updateMarkerAndCircle() {
+    if (!currentLocation) return; // No hacer nada si no hay ubicación seleccionada
+
+    // **Actualizar o crear el marcador**
+    if (!marker) {
+        marker = new google.maps.Marker({
+            map: map,
+            title: currentLocation.name
+        });
+    }
+    marker.setPosition({ lat: currentLocation.lat, lng: currentLocation.lng });
+    marker.setTitle(currentLocation.name);
+
+    // **Actualizar o crear el círculo**
+    const radius = parseFloat(rangeInput.value); // Obtener el valor actual de la barra de rango
+    if (!circle) {
+        circle = new google.maps.Circle({
+            strokeColor: "#102040",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#102040",
+            fillOpacity: 0.35,
+            map: map,
+            center: { lat: currentLocation.lat, lng: currentLocation.lng },
+            radius: radius, // El radio inicial
+        });
+    } else {
+        circle.setCenter({ lat: currentLocation.lat, lng: currentLocation.lng });
+        circle.setRadius(radius);
+    }
+}
+
 // --- Barra de Rango ---
 rangeInput.addEventListener('input', () => {
-    rangeValueSpan.textContent = rangeInput.value;
+    rangeValueSpan.textContent = rangeInput.value + " m"; // Actualizar el texto del span con el valor actual del rango
+    // **Actualizar el círculo cuando el valor del rango cambia**
+    if (circle && currentLocation) { // Asegurarse de que el círculo y la ubicación existen
+        const newRadius = parseFloat(rangeInput.value);
+        circle.setRadius(newRadius);
+    }
 });
-
-// Asegurarse de que el mapa se inicialice incluso si el modal no se abre de inmediato (aunque initMap se llama por el script de la API)
-// Esto es más un respaldo o si no estás usando el callback en la URL de la API.
-// window.onload = initMap; // Esto podría causar un doble intento si ya usas callback=initMap
 
 function calculateAverageTimeDifference() {
     if (timeDifferences.length === 0) return;
@@ -118,7 +134,7 @@ function calculateAverageTimeDifference() {
 }
 
 async function initMaps() {
-    initModalMap();
+    initMap();
     const apiRes = await fetch("/tutor/students", {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
