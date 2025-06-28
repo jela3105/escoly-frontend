@@ -45,6 +45,13 @@ router.get('/soporte', (req, res) => {
     res.render('tutor/soporte', { user: req.session.user });
 });
 
+router.get('/historial', async (req, res) => {
+    res.render('tutor/historial', {
+        user: req.session.user,
+        mapsApiKey: process.env.MAPS_API_KEY,
+    });
+});
+
 router.post('/changePassword', async (req, res) => {
     const { currentPassword, newPassword, confirmNewPassword } = req.body;
 

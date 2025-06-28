@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Password</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="tutorResources.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+  </head>
+
+  <body>
+    <input type="checkbox" name="" id="hamburguesa" />
+    <div class="barra-lateral">
+      <div class="lateral-titulo">
+        <h2><span class="lab la-accusoft"></span>Escoly</h2>
+      </div>
+      <div class="menu-lateral">
+        <ul>
+          <li>
+            <a href="/tutor"
+              ><span class="las la-undo"></span><span>Pagina Principal</span></a
+            >
+          </li>
+          <li>
+            <a href="/tutor/password"
+              ><span class="las la-lock"></span><span>Password</span></a
+            >
+          </li>
+          <li>
+            <a href="/tutor/soporte"
+              ><span class="las la-universal-access"></span
+              ><span>Soporte</span></a
+            >
+          </li>
+          <li>
+            <a class="activo"
+              ><span class="las la-history"></span
+              ><span>Historial</span></a
+            >
+          </li>
+          <li>
+            <a href="/logout"
+              ><span class="las la-door-closed"></span
+              ><span>Cerrar Sesion</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main">
+      <header>
+        <h2>
+          <label for="hamburguesa">
+            <span class="las la-bars"></span>
+          </label>
+          Tutor
+        </h2>
+        <div class="seccion-usuario">
+          <img src="../images/tutor.png" width="30px" height="30px" alt="" />
+          <div>
+            <h4>Tutor</h4>
+            <small><%= user.name %></small>
+          </div>
+        </div>
+      </header>
+      <main>
+
+        <div style="padding: 20px">
+          <label for="fecha">Fecha:</label>
+          <select id="fecha">
+            <option value="2025-06-28">28/06/2025</option>
+            <option value="2025-06-27">27/06/2025</option>
+          </select>
+
+          <label for="dispositivo" style="margin-left: 20px"
+            >ID dispositivo:</label
+          >
+          <select id="dispositivo">
+            <option value="ZJXI3">ZJXI3</option>
+            <option value="5JTL9">5JTL9</option>
+          </select>
+        </div>
+
+        <div
+          id="map"
+          style="width: 100%; height: 600px; margin-top: 20px"
+        ></div>
+
+        <script>
+          // Datos de ejemplo: fecha → dispositivo → coordenadas
+          const datosUbicacion = {
+            "2025-06-28": {
+              "ZJXI3": [
+                { lat: 19.3274917, lng: -99.1135233, hora: "12:55", bateria: "51%" },
+                { lat: 19.3275912, lng: -99.1135165, hora: "12:55", bateria: "51%" },
+                { lat: 19.3277855, lng: -99.1135059, hora: "12:55", bateria: "51%" },
+                { lat: 19.3279219, lng: -99.113493, hora: "12:55", bateria: "51%" },
+                { lat: 19.3280181, lng: -99.1134826, hora: "12:55", bateria: "51%" },
+                { lat: 19.3280181, lng: -99.1134826, hora: "12:55", bateria: "51%" },
+                { lat: 19.3281163, lng: -99.1134735, hora: "12:55", bateria: "51%" },
+                { lat: 19.3282379, lng: -99.1134624, hora: "12:55", bateria: "51%" },
+                { lat: 19.3283561, lng: -99.1134551, hora: "12:55", bateria: "51%" },
+                { lat: 19.3284603, lng: -99.113471, hora: "12:55", bateria: "51%" },
+                { lat: 19.3285512, lng: -99.1134902, hora: "12:55", bateria: "51%" },
+                { lat: 19.3286265, lng: -99.1133951, hora: "12:55", bateria: "51%" },
+              ],
+              "5JTL9": [
+                { lat: 19.42, lng: -99.13, hora: "09:00", bateria: "80%" },
+                { lat: 19.421, lng: -99.132, hora: "09:15", bateria: "76%" },
+              ],
+            },
+            "2025-06-27": {
+              "8HMK2": [
+                { lat: 19.45, lng: -99.16, hora: "10:00", bateria: "90%" },
+                { lat: 19.451, lng: -99.162, hora: "10:20", bateria: "88%" },
+              ],
+            },
+          };
+
+          let mapa;
+          let polilinea;
+          let marcadores = [];
+
+          function initMap() {
+            mapa = new google.maps.Map(document.getElementById("map"), {
+              zoom: 18,
+              center: { lat: 19.4326, lng: -99.1332 },
+            });
+
+            cargarDatos();
+            document
+              .getElementById("fecha")
+              .addEventListener("change", cargarDatos);
+            document
+              .getElementById("dispositivo")
+              .addEventListener("change", cargarDatos);
+          }
+
+          function cargarDatos() {
+            const fecha = document.getElementById("fecha").value;
+            const dispositivo = document.getElementById("dispositivo").value;
+
+            const coordenadas = datosUbicacion?.[fecha]?.[dispositivo] || [];
+
+            // Eliminar marcadores previos
+            marcadores.forEach((m) => m.setMap(null));
+            marcadores = [];
+
+            if (polilinea) polilinea.setMap(null);
+
+            if (coordenadas.length === 0) return;
+
+            mapa.setCenter(coordenadas[0]);
+
+            const path = [];
+
+            coordenadas.forEach((coord) => {
+              const marcador = new google.maps.Marker({
+                position: { lat: coord.lat, lng: coord.lng },
+                map: mapa,
+              });
+
+              const info = new google.maps.InfoWindow({
+                content: `Hora: ${coord.hora}<br>Batería: ${coord.bateria}`,
+              });
+
+              marcador.addListener("click", () => {
+                info.open(mapa, marcador);
+              });
+
+              marcadores.push(marcador);
+              path.push({ lat: coord.lat, lng: coord.lng });
+            });
+
+            polilinea = new google.maps.Polyline({
+              path,
+              geodesic: true,
+              strokeColor: "#FF0000",
+              strokeOpacity: 1.0,
+              strokeWeight: 2,
+              map: mapa,
+            });
+          }
+        </script>
+
+        <script
+          async
+          src="https://maps.googleapis.com/maps/api/js?key=<%= mapsApiKey %>&callback=initMap"
+        ></script>
+      </main>
+    </div>
+  </body>
+</html>
